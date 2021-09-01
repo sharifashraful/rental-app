@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, memo } from "react";
 import type { Node } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import ToolBar from "./ToolBar";
+import { RentalGridContext } from '../../contexts/RentalGridProvider'
 
 const columns = [
   { field: "id", headerName: "ID", width: 90 },
@@ -43,10 +44,19 @@ const rows = [
 ];
 
 const RentalGrid: () => Node = (props) => {
+	const [ state, dispatch ] = React.useContext(RentalGridContext)
+	
   return (
     <div style={{ height: 400, width: "100%" }}>
       <ToolBar />
-      <DataGrid rows={rows} columns={columns} pageSize={5} />
+      <DataGrid 
+      	rows={rows} 
+      	columns={columns} 
+      	pageSize={5} 
+      	onRowClick={({row})=>{
+      		dispatch({ type: "selection_row", row: row })
+      	}}
+      />
     </div>
   );
 };

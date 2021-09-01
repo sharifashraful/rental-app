@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -63,9 +63,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ToolBar() {
+const ToolBar = () => {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -96,3 +95,5 @@ export default function ToolBar() {
     </div>
   );
 }
+
+export default memo(ToolBar);

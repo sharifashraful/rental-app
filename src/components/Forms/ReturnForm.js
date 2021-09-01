@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
+
   marginRight10: {
     marginRight: 10,
   },
@@ -17,20 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BookForm(props) {
+export default function ReturnForm(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    name: "gas..",
-  });
-
-  const handleChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
-
   const closeForm = () => {
     if (props.closeModal) {
       props.closeModal();
@@ -41,52 +30,31 @@ export default function BookForm(props) {
     <div>
       <React.Fragment>
         <Typography variant="h6" gutterBottom>
-          Book a product
+          Return a product
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <InputLabel htmlFor="filled-name-native-simple">
-              Please Select Product
-            </InputLabel>
-            <Select
-              native
+            <TextField
+              required
+              id="name"
+              name="name"
+              value={props?.name}
+              label="Product Name"
               fullWidth
-              value={state.name}
-              onChange={handleChange}
-              inputProps={{
-                name: "name",
-                id: "filled-name-native-simple",
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value={10}>dfg dfg</option>
-              <option value={20}>fdg fdgdf</option>
-              <option value={30}>fgf dfgfd</option>
-            </Select>
+            />
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
+              required
+              id="mileage"
+              name="mileage"
+              label="Used Mileage"
+              value={props?.mileage}
               fullWidth
-              id="date"
-              label="From"
-              type="date"
-              InputLabelProps={{
-                shrink: true,
-              }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              id="date"
-              label="To"
-              type="date"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Grid>
+
           <Grid
             container
             justify="flex-end"
