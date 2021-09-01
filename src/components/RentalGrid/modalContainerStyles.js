@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 export const modalContainerStyle = () => {
   const top = 50;
@@ -9,19 +9,19 @@ export const modalContainerStyle = () => {
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
   };
-}
+};
 
 export const useModalContainerStyles = makeStyles((theme) => ({
   buttonColor: {
-    color: 'white',
-    borderColor: 'white',
+    color: "white",
+    borderColor: "white",
     marginRight: 10,
   },
   paper: {
-    position: 'absolute',
-    width: 500,    
+    position: "absolute",
+    width: 500,
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
