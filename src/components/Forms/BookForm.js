@@ -3,10 +3,12 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import products from "../../data/products";
+import { RentalGridContext } from '../../contexts/RentalGridProvider'
+const activeProducts = products.filter(p => p.availability)
 
 const useStyles = makeStyles((theme) => ({
   marginRight10: {
@@ -19,14 +21,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BookForm(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    name: "gas..",
-  });
+  const [formData, setFormData] = React.useState({});
+  const [ state, dispatch ] = React.useContext(RentalGridContext);
 
   const handleChange = (event) => {
     const name = event.target.name;
-    setState({
-      ...state,
+    setFormData({
+      ...formData,
       [name]: event.target.value,
     });
   };
@@ -36,6 +37,26 @@ export default function BookForm(props) {
       props.closeModal();
     }
   };
+
+  const getSelectedProduct = () => {
+    let products = activeProducts.filter(p=> p.code === formData.code);
+    return products.length?products[0]: null;
+  }
+
+  const addRecord = () => {
+    const product = getSelectedProduct();
+    if(product) {
+      dispatch({ type: "set_record", row: { 
+        id: Date.now(), 
+        durability: product.durability, 
+        name: product.name, 
+        mileage: product.mileage 
+      }})
+      closeForm();
+    } else {
+      alert("Please select a product")
+    }
+  }
 
   return (
     <div>
@@ -51,17 +72,19 @@ export default function BookForm(props) {
             <Select
               native
               fullWidth
-              value={state.name}
+              value={formData.code}
               onChange={handleChange}
               inputProps={{
-                name: "name",
+                name: "code",
                 id: "filled-name-native-simple",
               }}
             >
-              <option aria-label="None" value="" />
-              <option value={10}>dfg dfg</option>
-              <option value={20}>fdg fdgdf</option>
-              <option value={30}>fgf dfgfd</option>
+              <option aria-label="None" value="" />              
+              {activeProducts.map((p, index) => {
+              	return(
+              		<option key={"option-" + index} value={p.code}>{p.name} / {p.type}</option>
+              	)
+              })}
             </Select>
           </Grid>
 
@@ -99,7 +122,7 @@ export default function BookForm(props) {
             >
               No
             </Button>
-            <Button variant="outlined">Yes</Button>
+            <Button variant="outlined" onClick={addRecord}>Yes</Button>
           </Grid>
         </Grid>
       </React.Fragment>

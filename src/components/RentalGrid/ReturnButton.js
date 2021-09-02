@@ -28,7 +28,7 @@ export default function ReturnButton() {
     if(state.selectedRow) {
       setOpen(true);
     } else {
-      alert('Please select rental grid row..')
+      alert('Please select one rental record..')
     }
     
   };

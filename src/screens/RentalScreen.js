@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, memo } from "react";
+import React from "react";
 import type { Node } from "react";
 import RentalGrid from "../components/RentalGrid";
 import { RentalGridProvider } from "../contexts/RentalGridProvider"

@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef, memo } from "react";
+import React from "react";
 import type { Node } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import ToolBar from "./ToolBar";
 import { RentalGridContext } from '../../contexts/RentalGridProvider'
 
 const columns = [
-  { field: "id", headerName: "ID", width: 90 },
+  { field: "id", headerName: "Id", width: 120, hide: true },
   {
     field: "name",
     headerName: "Name",
@@ -31,18 +31,6 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, durability: 213, name: "Jon", mileage: 35 },
-  { id: 2, durability: 213, name: "Cersei", mileage: 42 },
-  { id: 3, durability: 213, name: "Jaime", mileage: 45 },
-  { id: 4, durability: 213, name: "Arya", mileage: 16 },
-  { id: 5, durability: 213, name: "Daenerys", mileage: null },
-  { id: 6, durability: 213, name: null, mileage: 150 },
-  { id: 7, durability: 213, name: "Ferrara", mileage: 44 },
-  { id: 8, durability: 213, name: "Rossini", mileage: 36 },
-  { id: 9, durability: 213, name: "Harvey", mileage: 65 },
-];
-
 const RentalGrid: () => Node = (props) => {
 	const [ state, dispatch ] = React.useContext(RentalGridContext)
 	
@@ -50,7 +38,7 @@ const RentalGrid: () => Node = (props) => {
     <div style={{ height: 400, width: "100%" }}>
       <ToolBar />
       <DataGrid 
-      	rows={rows} 
+      	rows={state.records} 
       	columns={columns} 
       	pageSize={5} 
       	onRowClick={({row})=>{
